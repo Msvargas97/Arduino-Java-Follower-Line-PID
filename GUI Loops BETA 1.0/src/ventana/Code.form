@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="199" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="127" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="jLabel2" pref="406" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="button" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="235" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="button" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="codeino">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="// Control PID Seguidor de Linea Carro de carreras Loops BETA V 1.0 Arduino + Java &#xa;// Powered By Michael Vargas 2014&#xa;//creditos: www.panamahitek.com&#xa;#include &lt;QTRSensors.h&gt;&#xa;#include &quot;math.h&quot;&#xa;//------------------------------------------------------------------------------------//&#xa;#define NUM_SENSORS             8            // Numero de sensores que usa&#xa;#define TIMEOUT               2500           // waits for 2500 us for sensor outputs to go low&#xa;#define EMITTER_PIN    QTR_NO_EMITTER_PIN    // desactivar LED_ON QTR_RC&#xa;const byte STBY =   A2; //standby // uso de pines analogos A0-A5 como digitales&#xa;//Motor A&#xa;const byte  PWMA =  11; //Speed control  &#xa;const byte  AIN1 =  A1; //Direction&#xa;const byte  AIN2 =  A0; //Direction&#xa;//Motor B&#xa;const byte  PWMB =  10; //Speed control&#xa;const byte  BIN1 =  A3; //Direction&#xa;const byte  BIN2 =  A4; //Direction&#xa;//LEDS RGB&#xa;const byte  AZUL =  13;&#xa;const byte  VERDE = A5;&#xa;const byte  ROJO =  12;&#xa;QTRSensorsRC qtrrc((unsigned char[]) {  2, 3, 4, 5, 6, 7, 8, 9} ,NUM_SENSORS, TIMEOUT, EMITTER_PIN); // Matriz QTR_RC pines en PCB ( D2-D9)&#xa;unsigned int sensorValues[NUM_SENSORS];&#xa;//VALORES PD&#xa;float VProporcional = 0.1;&#xa;int VDerivativo = 10;&#xa;//##############################&#xa;unsigned int ref_line=3500; // posicion linea negra de referencia&#xa;int maximum =255; // maxima velocidad &#xa;int time_calibracion=300; // tiempo de calibracion&#xa;int x=1; // velocidad calibracion&#xa;int inputString; // Lectura de datos Java&#xa;const int timer = 250; // Tiempo de delays&#xa;char junk = &apos; &apos;;   //Lectura de datos manteninedo el Buffer&#xa;void stop(){&#xa;//enable standby  &#xa;  digitalWrite(STBY, LOW); &#xa;}&#xa;void CELESTE_ON(){&#xa;   digitalWrite(13, HIGH); &#xa;  digitalWrite(A5, HIGH);   // turn the LED on (HIGH is the voltage level) &#xa;}&#xa;void CELESTE_OFF(){&#xa;   digitalWrite(13, LOW); &#xa;  digitalWrite(A5, LOW);   // turn the LED on (HIGH is the voltage level) &#xa;}&#xa;void MORADO_ON(){&#xa;  digitalWrite(13, HIGH); &#xa;  digitalWrite(12, HIGH); &#xa;}&#xa;void MORADO_OFF(){&#xa;  digitalWrite(13, LOW); &#xa;  digitalWrite(12, LOW); &#xa;}&#xa;&#xa;void LEDS_OFF(){&#xa;  digitalWrite(13, LOW); &#xa;  digitalWrite(12, LOW);&#xa;  digitalWrite(A5, LOW);&#xa;  MORADO_OFF;&#xa;  CELESTE_OFF;&#xa;}&#xa;void QTR_calibration(){&#xa;   &#xa;//-------------Instrucciones para Empezar a hacer la Calibracion de Sensores--------------------------------------//&#xa;  x=1;&#xa;MORADO_ON();&#xa;  for (int i = 1; i &lt; time_calibracion; i++)  // make the calibration take about 6.25 seconds&#xa;  {&#xa;    if (( i &gt;= 1) &amp;&amp; ( i&lt;=127 )){&#xa;    setSpeed(i,-i);&#xa;    }&#xa;    else{&#xa;      if (( x &gt;= 1) &amp;&amp; ( x&lt;=64 )){&#xa;      setSpeed(-x,x);&#xa;      x++;&#xa;      }&#xa;    }&#xa;    qtrrc.calibrate();       // reads all sensors 10 times at 2500 us per read (i.e. ~25 ms per call)&#xa;    if ((i == 127) || (x == 64)){&#xa;stop();&#xa;      } &#xa;  }&#xa; &#xa; MORADO_OFF();&#xa;  //---------------------------Fin Calibracion de Sensores----------------------------------------------------//&#xa;  for (int i=0; i &lt;=6; i++){  // parpadeo para indicar que termino la calibracion&#xa;       CELESTE_ON();&#xa;       delay(timer);&#xa;       CELESTE_OFF();&#xa;       delay(timer);&#xa;  } &#xa;}&#xa;void RESET_ALL(){&#xa; stop();// Motores detenidos  &#xa; LEDS_OFF();&#xa; Serial.flush(); &#xa;}&#xa;//--------------------------------------------------------------------------------------//&#xa;void setup()&#xa;{&#xa;  Serial.begin(9600);&#xa; &#xa;  pinMode(STBY, OUTPUT);&#xa;&#xa;  pinMode(PWMA, OUTPUT);&#xa;  pinMode(AIN1, OUTPUT);&#xa;  pinMode(AIN2, OUTPUT);&#xa;&#xa;  pinMode(PWMB, OUTPUT);&#xa;  pinMode(BIN1, OUTPUT);&#xa;  pinMode(BIN2, OUTPUT);&#xa;  &#xa;  pinMode(AZUL,OUTPUT);&#xa;  pinMode(VERDE,OUTPUT);&#xa;  pinMode(ROJO,OUTPUT);&#xa; RESET_ALL();&#xa;};&#xa;&#xa;unsigned int last_proportional = 0;&#xa;long integral = 0;&#xa;void loop()&#xa;{&#xa;menu_Arduino_Java();&#xa;};&#xa;//&lt;------------------------------------------------------------------------&gt;&#xa;// ################# FUNCIONES ###########################################&#xa;void menu_Arduino_Java(){&#xa;  boolean sensores=false,motores=false;&#xa;  if(Serial.available() &gt; 0){ &#xa;       do{&#xa;            delay(5);   // Mejora la recepcion de datos&#xa;           inputString = Serial.read();&#xa;           switch (inputString){&#xa;              case &apos;1&apos;:&#xa;                digitalWrite(ROJO,HIGH);&#xa;                   break;&#xa;              case &apos;2&apos;:&#xa;               digitalWrite(VERDE,HIGH);&#xa;                   break;&#xa;              case &apos;3&apos;:&#xa;               digitalWrite(AZUL,HIGH);&#xa;                   break;&#xa;              case &apos;4&apos;:&#xa;                  MORADO_ON();&#xa;                   break;&#xa;              case &apos;5&apos;:&#xa;                 CELESTE_ON();&#xa;                   break;&#xa;              case &apos;6&apos;:&#xa;                  LEDS_OFF();             //apagar leds&#xa;                   break;&#xa;              case &apos;7&apos;:&#xa;                 &#xa;                     QTR_calibration();  // Iniciar Calibracion&#xa;                     stop();&#xa;                   break;  &#xa;              case &apos;8&apos;:&#xa;                  sensores = true;              // Lectura de sensores para graficar&#xa;                  while ( sensores == true ){&#xa;                   read_IR();&#xa;                   inputString=Serial.read();&#xa;                   if( inputString &gt;= &apos;0&apos; ){&#xa;                     sensores=false;&#xa;                  }&#xa;                  }&#xa;                  break;&#xa;              case &apos;9&apos;:                // MOTORES ADELANTE&#xa;                    motores = true;&#xa;                    while(motores==true){&#xa;                    setSpeed(255,255); &#xa;                    delay(100);&#xa;                    inputString= Serial.read();&#xa;                    if( inputString &gt;= &apos;0&apos; ){&#xa;                      motores=false;&#xa;                      stop();&#xa;                  }&#xa;                   }&#xa;                    break;&#xa;        &#xa;              case &apos;a&apos;:&#xa;                    motores = true;&#xa;                    while(motores==true){&#xa;                     setSpeed(-255,-255); &#xa;                     delay(100);&#xa;                     inputString= Serial.read();&#xa;                     if( inputString &gt;= &apos;0&apos; ){&#xa;                      motores=false;&#xa;                      stop();&#xa;                     }&#xa;                   }&#xa;                   break;&#xa;             case &apos;b&apos;:&#xa;                      Serial.println(VProporcional);&#xa;                      delay(250);&#xa;                      Serial.println(VDerivativo);&#xa;                      delay(250);&#xa;                      Serial.println(maximum);&#xa;                      delay(250);&#xa;                   /* while (Serial.available() == 0) ;  // Wait here until input buffer has a character&#xa;                      {&#xa;                        VProporcional = Serial.parseFloat();      &#xa;                        while (Serial.available() &gt; 0)  // .parseFloat() can leave non-numeric characters&#xa;                              { junk = Serial.read() ; }      // clear the keyboard buffer&#xa;                           }&#xa;                 &#xa;                      while (Serial.available() == 0) ;  // Wait here until input buffer has a character&#xa;                      {&#xa;                        VDerivativo = Serial.parseInt();      &#xa;                        while (Serial.available() &gt; 0)  // .parseFloat() can leave non-numeric characters&#xa;                              { junk = Serial.read() ; }      // clear the keyboard buffer&#xa;                           }&#xa;            &#xa;                         while (Serial.available() == 0) ;  // Wait here until input buffer has a character&#xa;         &#xa;                      {&#xa;                        maximum= Serial.parseInt();      &#xa;                        while (Serial.available() &gt; 0)  &#xa;                              { junk = Serial.read() ; }   &#xa;                           }*/&#xa;                  break;&#xa;             case &apos;c&apos; :&#xa;                     while (Serial.available() == 0) ;  // Wait here until input buffer has a character&#xa;                      {&#xa;                        VProporcional = Serial.parseFloat();      &#xa;                        while (Serial.available() &gt; 0)  // .parseFloat() can leave non-numeric characters&#xa;                              { junk = Serial.read() ; }      // clear the keyboard buffer&#xa;                           }&#xa;                         break;&#xa;             case &apos;e&apos;:&#xa;                      RESET_ALL();            // REINICAR PROGRAMA&#xa;                      software_Reset();&#xa;                      break;&#xa;             case &apos;f&apos;: &#xa;                   // delay(3000); // Espera 3 segundos antes de empezar a calibrar&#xa;                     QTR_calibration();       // MODO COMPETENCIA&#xa;                     while(true){&#xa;                      Line_follower_PID();&#xa;                     }&#xa;                   break;&#xa;               }; // FIN SWITCH MENU&#xa;           }while( inputString == 0 );&#xa;         &#xa;      }    &#xa; /*   else{&#xa;     QTR_calibration();     &#xa;     while(true){&#xa;     Line_follower_PID();&#xa;      }*/&#xa;    }  &#xa;&#xa; void software_Reset() // Restarts program from beginning but does not reset the peripherals and registers&#xa;{&#xa;asm volatile (&quot;  jmp 0&quot;);  &#xa;}  &#xa;void read_IR() {&#xa; unsigned int position = qtrrc.readLine(sensorValues); // leemos posicion de la linea en la variable position&#xa; Serial.println(position); &#xa; delay(timer);&#xa;}&#xa;&#xa;void Line_follower_PID(){&#xa;unsigned int position = qtrrc.readLine(sensorValues); // leemos posicion de la linea en la variable position&#xa;  int proportional = (int)position - ref_line;  // Referencia donde seguira la linea, mitad sensores.&#xa;  // Calculos PD&#xa;  int derivative = proportional - last_proportional;&#xa;  integral += proportional;&#xa;  last_proportional = proportional;&#xa;  &#xa;  int power_difference = proportional/VProporcional + integral*0 + derivative*VDerivativo;&#xa;  &#xa;  if (power_difference &gt; maximum)&#xa;    power_difference = maximum;&#xa;  if (power_difference &lt; -maximum)&#xa;    power_difference = -maximum;&#xa;  &#xa;    if (power_difference &lt; 0)&#xa;    setSpeed(maximum, maximum + power_difference);&#xa;  else&#xa;    setSpeed(maximum - power_difference,maximum); &#xa;}&#xa;void setSpeed(int velocidad_1,int velocidad_2){&#xa;&#xa;if ((velocidad_1 &lt; 0) || (velocidad_2 &lt; 0)){&#xa;  if ((velocidad_1 &lt; 0) &amp;&amp; (velocidad_2 &lt;0)){&#xa;     velocidad_1= abs(velocidad_1); //Motor A atras&#xa;     velocidad_2= abs(velocidad_2); //Motor B atras&#xa;      move(1,velocidad_1, 0); &#xa;      move(2,velocidad_2, 0);&#xa;  }&#xa;    if (velocidad_1 &lt; 0){&#xa;      velocidad_1= abs(velocidad_1); //Motor A atras&#xa;      move(1,velocidad_1, 0); &#xa;      move(2,velocidad_2, 1); &#xa;    }&#xa;    if (velocidad_2 &lt; 0){&#xa;      velocidad_2= abs(velocidad_2);//Motor B atras&#xa;      move(1,velocidad_1, 1); &#xa;      move(2,velocidad_2, 0); &#xa;    } &#xa;  }&#xa;  else{&#xa;     move(1, velocidad_1, 1); &#xa;     move(2,velocidad_2, 1); &#xa;  }&#xa;}&#xa;void move(int motor, int speed, int direction){&#xa;  digitalWrite(STBY, HIGH); &#xa;&#xa;  boolean inPin1 = LOW;&#xa;  boolean inPin2 = HIGH;&#xa;&#xa;  if(direction == 1){&#xa;    inPin1 = HIGH;&#xa;    inPin2 = LOW;&#xa;  }&#xa;&#xa;  if(motor == 1){&#xa;    digitalWrite(AIN1, inPin1);&#xa;    digitalWrite(AIN2, inPin2);&#xa;    analogWrite(PWMA, speed);&#xa;  }else{&#xa;    digitalWrite(BIN1, inPin1);&#xa;    digitalWrite(BIN2, inPin2);&#xa;    analogWrite(PWMB, speed);&#xa;  }&#xa;}&#xa;&#xa;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="codeinoKeyPressed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei Light" size="14" style="3"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="66" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="C&#xf3;digo Arduino:"/>
+        <Property name="name" type="java.lang.String" value="" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="button">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar "/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="10" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Escoger la carpeta :/Codigo Arduino y a continuaci&#xf3;n asignarle un nombre al archivo."/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
